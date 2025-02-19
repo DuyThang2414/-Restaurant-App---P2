@@ -1,20 +1,72 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
-export default function App() {
+const ParentComponent = () => {
+  const [backgroundColor, setBackgroundColor] = useState("#ffffff");
+
+  const changeBackgroundColor = (color) => {
+    setBackgroundColor(color);
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={[styles.container, { backgroundColor }]}>
+      <Text style={styles.text}>Chọn màu nền cho component cha:</Text>
+
+      {/* Các button tùy chỉnh với TouchableOpacity */}
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: "red" }]}
+        onPress={() => changeBackgroundColor("red")}
+      >
+        <Text style={styles.buttonText}>Màu đỏ</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: "blue" }]}
+        onPress={() => changeBackgroundColor("blue")}
+      >
+        <Text style={styles.buttonText}>Màu xanh</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: "yellow" }]}
+        onPress={() => changeBackgroundColor("yellow")}
+      >
+        <Text style={styles.buttonText}>Màu vàng</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: "green" }]}
+        onPress={() => changeBackgroundColor("green")}
+      >
+        <Text style={styles.buttonText}>Màu xanh lá cây</Text>
+      </TouchableOpacity>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  text: {
+    fontSize: 20,
+    marginBottom: 20,
+  },
+  button: {
+    width: "100%", // Chiều rộng nút chiếm toàn bộ không gian ngang
+    paddingVertical: 15,
+    marginBottom: 10,
+    borderRadius: 5,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
   },
 });
+
+export default ParentComponent;
