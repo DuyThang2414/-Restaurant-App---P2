@@ -1,45 +1,40 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, TextInput, Text, Button, StyleSheet } from "react-native";
 
-const ParentComponent = () => {
-  const [backgroundColor, setBackgroundColor] = useState("#ffffff");
+const PhoneValidationApp = () => {
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [error, setError] = useState("");
 
-  const changeBackgroundColor = (color) => {
-    setBackgroundColor(color);
+  const validatePhoneNumber = (number) => {
+    const phoneRegex = /^(\+84|0)(3|5|7|8|9)\d{8}$/;
+    return phoneRegex.test(number);
+  };
+
+  const handleSubmit = () => {
+    if (validatePhoneNumber(phoneNumber)) {
+      setError("");
+
+      alert("Số điện thoại hợp lệ");
+    } else {
+      setError("Số điện thoại không hợp lệ");
+    }
   };
 
   return (
-    <View style={[styles.container, { backgroundColor }]}>
-      <Text style={styles.text}>Chọn màu nền cho component cha:</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Xác thực số điện thoại Việt Nam</Text>
 
-      {/* Các button tùy chỉnh với TouchableOpacity */}
-      <TouchableOpacity
-        style={[styles.button, { backgroundColor: "red" }]}
-        onPress={() => changeBackgroundColor("red")}
-      >
-        <Text style={styles.buttonText}>Màu đỏ</Text>
-      </TouchableOpacity>
+      <TextInput
+        style={styles.input}
+        placeholder="Nhập số điện thoại"
+        value={phoneNumber}
+        onChangeText={setPhoneNumber}
+        keyboardType="phone-pad"
+      />
 
-      <TouchableOpacity
-        style={[styles.button, { backgroundColor: "blue" }]}
-        onPress={() => changeBackgroundColor("blue")}
-      >
-        <Text style={styles.buttonText}>Màu xanh</Text>
-      </TouchableOpacity>
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
-      <TouchableOpacity
-        style={[styles.button, { backgroundColor: "yellow" }]}
-        onPress={() => changeBackgroundColor("yellow")}
-      >
-        <Text style={styles.buttonText}>Màu vàng</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={[styles.button, { backgroundColor: "green" }]}
-        onPress={() => changeBackgroundColor("green")}
-      >
-        <Text style={styles.buttonText}>Màu xanh lá cây</Text>
-      </TouchableOpacity>
+      <Button title="Xác thực" onPress={handleSubmit} />
     </View>
   );
 };
@@ -48,25 +43,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
     padding: 20,
   },
-  text: {
+  title: {
     fontSize: 20,
+    textAlign: "center",
     marginBottom: 20,
   },
-  button: {
-    width: "100%", // Chiều rộng nút chiếm toàn bộ không gian ngang
-    paddingVertical: 15,
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 10,
     marginBottom: 10,
     borderRadius: 5,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonText: {
-    color: "#fff",
     fontSize: 16,
+  },
+  errorText: {
+    color: "red",
+    fontSize: 14,
+    marginBottom: 10,
+    textAlign: "center",
   },
 });
 
-export default ParentComponent;
+export default PhoneValidationApp;
